@@ -10,6 +10,7 @@ import googleIcon from '../assets/images/google-icon.svg'
 
 import '../styles/auth.scss'
 import { database } from '../services/firebase'
+import toast, { Toaster } from 'react-hot-toast'
 
 export function Home() {
   const history = useHistory()
@@ -35,7 +36,7 @@ export function Home() {
     const roomRef = await database.ref(`rooms/${roomCode}`).get()
 
     if (!roomRef.exists()) {
-      alert('The room does not exist!')
+      toast.error('The room does not exist!')
       return
     }
 
@@ -44,6 +45,7 @@ export function Home() {
 
   return (
     <div id="page-auth">
+      <Toaster />
       <aside>
         <img src={illustrationImg} alt="Home page illustration" />
         <strong>Crie salas de Q&amp;A ao vivo</strong>

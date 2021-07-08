@@ -1,5 +1,6 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
 
 import { CodeRoom } from '../components/CodeRoom'
 import { Button } from '../components/Button'
@@ -9,20 +10,62 @@ import { database } from '../services/firebase'
 import logoImg from '../assets/images/logo.svg'
 import '../styles/room.scss'
 
+type FirebaseQuestions = Record<string, {
+  author: {
+    avatar: string;
+    name: string;
+  }
+  content: string;
+  isAnswered: boolean;
+  isHighlighted: boolean;
+}> // Record é usado para tipagem de vetores no typescript onde o que está dentro do sinal de maior e menor
+  // é o conteúdo do vetor.
 
-import toast from 'react-hot-toast'
+type Questions = {
+  id: string;
+  author: {
+    avatar: string;
+    name: string;
+  }
+  content: string;
+  isAnswered: boolean;
+  isHighlighted: boolean;
+}
 
 type ParamsProps = {
   id: string;
 }
 
 export function Room() {
-  const { user } = useAuth()
+  const { user, signInWithGoogle } = useAuth()
   const params = useParams<ParamsProps>()
   const [newQuestion, setNewQuestion] = useState('')
+  const [questions, setQuestions] = useState<Questions[]>([])
+  const [title, setTitle] = useState()
 
-  const notify = () => toast.success('Pergunta enviada com sucesso')
   const roomId = params.id
+
+  useEffect(() => {
+    const roomRef = database.ref(`rooms/${roomId}`)
+
+    roomRef.once('value', room => {
+      const databaseRoom = room.val()
+      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {}
+
+      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+        return {
+          id: key,
+          content: value.content,
+          author: value.author,
+          isHighlighted: value.isHighlighted,
+          isAnswered: value.isAnswered
+        }
+      })
+
+      setTitle(databaseRoom.title)
+      setQuestions(parsedQuestions)
+    })
+  }, [roomId])
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()
@@ -32,14 +75,14 @@ export function Room() {
     }
 
     if (!user) {
-      throw new Error('You must logged in')
+      throw new Error('You must be logged!')
     }
 
     const question = {
       content: newQuestion,
       author : {
         name: user?.name,
-        avatar: user.avatar,
+        avatar: user?.avatar,
       },
       isHighlighted: false,
       isAnswered: false,
@@ -47,22 +90,28 @@ export function Room() {
 
     await database.ref(`rooms/${roomId}/questions`).push(question)
 
+    toast.success('Pergunta enviada com sucesso')
+
     setNewQuestion('')
   }
 
   return (
     <div id="page-room">
+      <Toaster />
       <header>
         <div className="content">
           <img src={logoImg} alt="" />
-          <CodeRoom code={roomId} /> 
+          <CodeRoom code={roomId} />
+          <Button 
+            className="button-logout"
+          >Logout</Button> 
         </div>
       </header>
 
       <main className="content">
         <div className="room-title">
-          <h1>Sala React</h1>
-          <span>4 perguntas</span>
+          <h1>Sala {title}</h1>
+          { questions.length > 0 && <span> {questions.length} pergunta(s)</span> }
         </div>
 
         <form onSubmit={handleSendQuestion}>
@@ -81,11 +130,11 @@ export function Room() {
             ) : (
               <span>
                 Para enviar uma pergunta, 
-                <button>faça seu login</button> .
+                <button onClick={signInWithGoogle}>faça seu login</button> .
               </span>
             ) }
-            <Button 
-              onClick={notify} 
+            <Button
+              className="button" 
               type="submit" 
               disabled={!user}
             >Enviar pergunta</Button>
