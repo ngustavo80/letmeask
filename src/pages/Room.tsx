@@ -1,36 +1,19 @@
-import { FormEvent, useState, useEffect } from 'react'
+import { FormEvent, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 
+import { Question } from '../components/Question'
 import { CodeRoom } from '../components/CodeRoom'
 import { Button } from '../components/Button'
 import { useAuth } from '../hooks/useAuth'
+import { useRoom } from '../hooks/useRoom'
 import { database } from '../services/firebase'
 
+
 import logoImg from '../assets/images/logo.svg'
+import likeImg from '../assets/images/like.svg'
 import '../styles/room.scss'
-
-type FirebaseQuestions = Record<string, {
-  author: {
-    avatar: string;
-    name: string;
-  }
-  content: string;
-  isAnswered: boolean;
-  isHighlighted: boolean;
-}> // Record é usado para tipagem de vetores no typescript onde o que está dentro do sinal de maior e menor
-  // é o conteúdo do vetor.
-
-type Questions = {
-  id: string;
-  author: {
-    avatar: string;
-    name: string;
-  }
-  content: string;
-  isAnswered: boolean;
-  isHighlighted: boolean;
-}
+import { LougoutButton } from '../components/LogoutButton'
 
 type ParamsProps = {
   id: string;
@@ -38,34 +21,13 @@ type ParamsProps = {
 
 export function Room() {
   const { user, signInWithGoogle } = useAuth()
-  const params = useParams<ParamsProps>()
   const [newQuestion, setNewQuestion] = useState('')
-  const [questions, setQuestions] = useState<Questions[]>([])
-  const [title, setTitle] = useState()
-
+  const params = useParams<ParamsProps>()
+  
   const roomId = params.id
+  
+  const { questions, title } = useRoom(roomId)
 
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`)
-
-    roomRef.once('value', room => {
-      const databaseRoom = room.val()
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {}
-
-      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
-        return {
-          id: key,
-          content: value.content,
-          author: value.author,
-          isHighlighted: value.isHighlighted,
-          isAnswered: value.isAnswered
-        }
-      })
-
-      setTitle(databaseRoom.title)
-      setQuestions(parsedQuestions)
-    })
-  }, [roomId])
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()
@@ -101,10 +63,10 @@ export function Room() {
       <header>
         <div className="content">
           <img src={logoImg} alt="" />
-          <CodeRoom code={roomId} />
-          <Button 
-            className="button-logout"
-          >Logout</Button> 
+          <div>
+            <CodeRoom code={roomId} />
+            <LougoutButton />
+          </div>
         </div>
       </header>
 
@@ -140,6 +102,27 @@ export function Room() {
             >Enviar pergunta</Button>
           </div>
         </form>
+
+        <div className="question-list">
+          {questions.map(question => {
+            return (
+              <Question
+                key={question.id} 
+                content={question.content}
+                author={question.author}
+              >
+                <button
+                  className="like-button"
+                  type="button"
+                  aria-label="Marcar como gostei"
+                >
+                  <span>10</span>
+                  <img src={likeImg} alt="Like" />
+                </button>
+              </Question>
+            )
+          })}
+        </div>
       </main>
     </div>
   )

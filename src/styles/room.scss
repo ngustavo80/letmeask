@@ -14,8 +14,14 @@
         max-height: 45px;
       }
 
-      .logout-button {
-        background: red;
+      > div {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        button {
+          height: 40px;
+        }
       }
     }
   }
@@ -98,6 +104,10 @@
           }
         }
       }
+    }
+
+    .question-list {
+      margin-top: 32px;
     }
   }
 }

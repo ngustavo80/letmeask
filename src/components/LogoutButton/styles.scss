@@ -1,0 +1,32 @@
+.logout-button {
+  height: 50px;
+  width: 50px;
+  border-radius: 8px;
+  font-weight: 500;
+  background: #FFF;
+  border: 1px solid #E73F5D;
+  color: #E73F5D;
+  padding: 0 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  img {
+    height: 20px;
+    width: 20px;
+    filter: invert(61%) sepia(72%) saturate(7207%) hue-rotate(328deg) brightness(95%) contrast(91%);
+  }
+
+  &:hover {
+    background: #E73F5D;
+
+    img {
+      filter: invert(100%) sepia(0%) saturate(7485%) hue-rotate(247deg) brightness(104%) contrast(104%);
+    }
+  }
+}
