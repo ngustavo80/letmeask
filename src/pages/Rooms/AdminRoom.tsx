@@ -1,17 +1,17 @@
 import { useHistory, useParams } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 
-import { Question } from '../components/Question'
-import { CodeRoom } from '../components/CodeRoom'
-import { Button } from '../components/Button'
-import { LougoutButton } from '../components/LogoutButton'
-import { useRoom } from '../hooks/useRoom'
+import { Question } from '../../components/Question'
+import { CodeRoom } from '../../components/CodeRoom'
+import { Button } from '../../components/Button'
+import { LougoutButton } from '../../components/LogoutButton'
+import { useRoom } from '../../hooks/useRoom'
+import { database } from '../../services/firebase'
 
 
-import logoImg from '../assets/images/logo.svg'
-import deleteImg from '../assets/images/delete.svg'
-import '../styles/room.scss'
-import { database } from '../services/firebase'
+import logoImg from '../../assets/images/logo.svg'
+import deleteImg from '../../assets/images/delete.svg'
+import './styles.scss'
 
 type ParamsProps = {
   id: string;

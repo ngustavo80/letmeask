@@ -2,18 +2,18 @@ import { FormEvent, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 
-import { Question } from '../components/Question'
-import { CodeRoom } from '../components/CodeRoom'
-import { Button } from '../components/Button'
-import { useAuth } from '../hooks/useAuth'
-import { useRoom } from '../hooks/useRoom'
-import { database } from '../services/firebase'
+import { Question } from '../../components/Question'
+import { CodeRoom } from '../../components/CodeRoom'
+import { Button } from '../../components/Button'
+import { LougoutButton } from '../../components/LogoutButton'
+import { useAuth } from '../../hooks/useAuth'
+import { useRoom } from '../../hooks/useRoom'
+import { database } from '../../services/firebase'
 
 
-import logoImg from '../assets/images/logo.svg'
-import likeImg from '../assets/images/like.svg'
-import '../styles/room.scss'
-import { LougoutButton } from '../components/LogoutButton'
+import logoImg from '../../assets/images/logo.svg'
+import likeImg from '../../assets/images/like.svg'
+import './styles.scss'
 
 type ParamsProps = {
   id: string;
