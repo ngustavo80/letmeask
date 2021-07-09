@@ -40,6 +40,11 @@ export function Home() {
       return
     }
 
+    if (roomRef.val().endedAt) {
+      toast.error('Room already closed!')
+      return
+    }
+
     history.push(`rooms/${roomCode}`)
   }
 

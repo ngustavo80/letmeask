@@ -34,5 +34,42 @@
         font-size: 14px;
       }
     }
+
+    button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      transition: filter 0.2s;
+
+      &.like-button {
+        display: flex;
+        align-items: flex-end;
+        color: #737380;
+        gap: 8px;
+
+        img {
+          filter: invert(44%) sepia(10%) saturate(417%) hue-rotate(202deg) brightness(100%) contrast(85%);
+        }
+
+        &.liked {
+          color: #835afd;
+          filter: invert(67%) sepia(75%) saturate(7241%) hue-rotate(237deg) brightness(98%) contrast(104%);
+        }
+      }
+
+      &.delete-question {
+        color: #737380;
+        transition: filter 0.1s;
+      }
+
+      &.delete-question:hover {
+        color: #E73F5D;
+        filter: invert(61%) sepia(72%) saturate(7207%) hue-rotate(328deg) brightness(95%) contrast(91%);
+      }
+
+      &:hover {
+        filter: brightness(0.7);
+      }
+    }
   }
 }
