@@ -9,7 +9,7 @@ type RoomCodeProps = {
 }
 
 export function CodeRoom(props: RoomCodeProps) {
-  const notify = () => toast.success('Código copiado com sucesso')
+  const notify = () => toast.success('Código copiado!')
 
   async function copyRoomCodeToClipboard() {
     await navigator.clipboard.writeText(props.code)

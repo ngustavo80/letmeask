@@ -4,8 +4,8 @@ import { AuthContextProvider } from './contexts/AuthContext'
 
 import { Home } from './pages/Landing/Home'
 import { NewRoom } from './pages/Landing/NewRoom'
-import { Room } from './pages/Rooms/Room'
-import { AdminRoom } from './pages/Rooms/AdminRoom'
+import { Room } from './pages/RoomPages/Room'
+import { AdminRoom } from './pages/RoomPages/AdminRoom'
 
 
 function App() {
