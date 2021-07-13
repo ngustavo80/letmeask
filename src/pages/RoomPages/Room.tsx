@@ -9,10 +9,12 @@ import { LougoutButton } from '../../components/LogoutButton'
 import { useAuth } from '../../hooks/useAuth'
 import { useRoom } from '../../hooks/useRoom'
 import { database } from '../../services/firebase'
+import { firebase } from '../../services/firebase'
 
 
 import logoImg from '../../assets/images/logo.svg'
 import likeImg from '../../assets/images/like.svg'
+
 import './styles.scss'
 
 type ParamsProps = {
@@ -28,6 +30,14 @@ export function Room() {
   
   const { questions, title } = useRoom(roomId)
 
+  function refreshPage(){ 
+    window.location.reload(); 
+  } 
+
+  async function handleLogout() {
+    await firebase.auth().signOut()
+    refreshPage()
+  }
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()
@@ -52,7 +62,7 @@ export function Room() {
 
     await database.ref(`rooms/${roomId}/questions`).push(question)
 
-    toast.success('Pergunta enviada com sucesso')
+    toast.success('Pergunta enviada com sucesso!')
 
     setNewQuestion('')
   }
@@ -66,7 +76,7 @@ export function Room() {
       })
     }
   }
-
+    
   return (
     <div id="page-room">
       <Toaster />
@@ -75,7 +85,7 @@ export function Room() {
           <img src={logoImg} alt="" />
           <div>
             <CodeRoom code={roomId} />
-            <LougoutButton />
+            <LougoutButton onClick={() => handleLogout()} />
           </div>
         </div>
       </header>

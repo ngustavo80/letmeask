@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 
 import { useAuth } from '../../hooks/useAuth'
+import { useRoom } from '../../hooks/useRoom'
 import { Button } from '../../components/Button'
 import { database } from '../../services/firebase'
 
@@ -16,6 +17,7 @@ export function Home() {
   const history = useHistory()
   const { user, signInWithGoogle } = useAuth()
   const [roomCode, setRoomCode] = useState('')
+  const { authorId } = useRoom(roomCode)
 
 
   async function handleCreateRoom() {
@@ -45,7 +47,11 @@ export function Home() {
       return
     }
 
-    history.push(`rooms/${roomCode}`)
+    if (user?.id === authorId ) {
+      history.push(`/admin/rooms/${roomCode}`)
+    } else {
+      history.push(`rooms/${roomCode}`)
+    }
   }
 
   return (

@@ -7,7 +7,6 @@ import { NewRoom } from './pages/Landing/NewRoom'
 import { Room } from './pages/RoomPages/Room'
 import { AdminRoom } from './pages/RoomPages/AdminRoom'
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -17,7 +16,7 @@ function App() {
           <Route path="/rooms/new" component={NewRoom} />
           <Route path="/rooms/:id" component={Room} />
           
-          <Route path="/admin/rooms/:id" component={AdminRoom} />
+         <Route path="/admin/rooms/:id" component={AdminRoom} />
         </Switch>
       </AuthContextProvider>
     </BrowserRouter>
