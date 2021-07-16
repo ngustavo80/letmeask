@@ -41,8 +41,8 @@ export function useRoom(roomId: string) {
   useEffect(() => {
     const roomRef = database.ref(`rooms/${roomId}`)
 
-    roomRef.on('value', room => {
-      const databaseRoom = room.val()
+    roomRef.on('value', async room => {
+      const databaseRoom = await room.val()
       const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {}
 
       const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
@@ -58,8 +58,8 @@ export function useRoom(roomId: string) {
       })
 
       setTitle(databaseRoom.title)
-      setQuestions(parsedQuestions)
       SetAuthorId(databaseRoom.authorId)
+      setQuestions(parsedQuestions)
     })
 
     return () => {

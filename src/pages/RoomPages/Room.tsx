@@ -14,6 +14,7 @@ import { firebase } from '../../services/firebase'
 
 import logoImg from '../../assets/images/logo.svg'
 import likeImg from '../../assets/images/like.svg'
+import emptyQuestionsImg from '../../assets/images/empty-questions.svg'
 
 import './styles.scss'
 
@@ -82,7 +83,7 @@ export function Room() {
       <Toaster />
       <header>
         <div className="content">
-          <img src={logoImg} alt="" />
+          <img src={logoImg} alt="" className="logo-img" />
           <div>
             <CodeRoom code={roomId} />
             <LougoutButton onClick={() => handleLogout()} />
@@ -124,29 +125,38 @@ export function Room() {
         </form>
 
         <div className="question-list">
-          {questions.map(question => {
-            return (
-              <Question
-                key={question.id} 
-                content={question.content}
-                author={question.author}
-                isAnswered={question.isAnswered}
-                isHighlighted={question.isHighlighted}
-              >
-                {!question.isAnswered && (
-                  <button
-                    className={`like-button ${question.likeId ? 'liked' : ''}`}
-                    type="button"
-                    aria-label="Marcar como gostei"
-                    onClick={() => handleLikeQuestion(question.id, question.likeId)}
-                  >
-                    { question.likeCount > 0 && <span>{question.likeCount}</span>}
-                    <img src={likeImg} alt="Like" />
-                  </button>           
-                )}
-              </Question>
-            )
-          })}
+          {questions.length > 0 ?
+            questions.map(question => {
+              return (
+                <Question
+                  key={question.id} 
+                  content={question.content}
+                  author={question.author}
+                  isAnswered={question.isAnswered}
+                  isHighlighted={question.isHighlighted}
+                >
+                  {!question.isAnswered && (
+                    <button
+                      className={`like-button ${question.likeId ? 'liked' : ''}`}
+                      type="button"
+                      aria-label="Marcar como gostei"
+                      onClick={() => handleLikeQuestion(question.id, question.likeId)}
+                    >
+                      { question.likeCount > 0 && <span>{question.likeCount}</span>}
+                      <img src={likeImg} alt="Like" />
+                    </button>           
+                  )}
+                </Question>
+              )
+            })
+            :
+            <div className="empty-questions">
+              <img src={emptyQuestionsImg} alt="" />
+              <h2>Nenhuma pergunta por aqui...</h2>
+              <p>Faça seu login e seja a primeira pessoa a</p>
+              <p> fazer uma pergunta</p>
+            </div>
+          }
         </div>
       </main>
     </div>
