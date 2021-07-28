@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+<div align="center">
+  <img src="https://github.com/ngustavo80/letmeask/blob/main/src/assets/images/logo.svg" alt="Let me ask logo">
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Tecnologias
 
-## Available Scripts
+  Tecnologias utilizadas
 
-In the project directory, you can run:
+  - [ReactJS](https://reactjs.org/)
+  - [Typescript](https://www.typescriptlang.org/)
+  - [Firebase](https://firebase.google.com)
 
-### `yarn start`
+## Projeto
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  Você pode baixar o projeto em formato ZIP.
+  
+### Clonar Projeto
+  
+   ```bash
+$ git clone https://github.com/ngustavo80/letmeask.git
+```  
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Instalar dependências
 
-### `yarn test`
+  ```bash
+$ yarn
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Banco da dados Realtime Database
 
-### `yarn build`
+  Crie uma conta no firebase, logo em seguida crie um projeto e faça um arquivo de variáveis locais seguindo as variáveis que estâo no arquivo firebase.ts
+  
+### Iniciando aplicação
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  ```bash
+$ yarn start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Aplicação
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Home
+![Screenshot1](https://github.com/ngustavo80/letmeask/blob/main/src/assets/images/Screenshot.png)
+Sala
+![Screenshot2](https://github.com/ngustavo80/letmeask/blob/main/src/assets/images/Screenshot(1).png)
+Sala admin
+![Screenshot3](https://github.com/ngustavo80/letmeask/blob/main/src/assets/images/Screenshot(2).png)
